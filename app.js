@@ -36,7 +36,7 @@ app.options('*',cors);
 mongoose.connect(process.env.MONGO_DB_URL,{ 
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: 'nukadb' }).then(()=>{
+    dbName: 'nukadb'}).then(()=>{
     console.log('*****db connection success*****');
 });
 
