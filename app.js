@@ -3,7 +3,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan')
 const mongoose = require('mongoose');
+
 const cors = require('cors');
+
+    
 
 
 
@@ -13,6 +16,8 @@ const productRouter = require('./routers/products');
 const userRouter = require('./routers/users');
 const orderRouter = require('./routers/orders');
 const categoryRouter = require('./routers/categories');
+
+
 
 
 
@@ -36,7 +41,7 @@ app.options('*',cors);
 mongoose.connect(process.env.MONGO_DB_URL,{ 
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: 'nukadb'}).then(()=>{
+    dbName: 'dbnuka'}).then(()=>{
     console.log('*****db connection success*****');
 });
 

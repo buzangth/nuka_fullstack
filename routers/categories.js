@@ -11,16 +11,16 @@ router.get(`/`, async (req,res)=>{
     res.send(categoryList);
 });
 
-router.post(`/`,(req,res)=>{
+router.post(`/`,async (req,res)=>{
 
     const category = new Category({
-        name: req.body.name,
+        name: req.body.name
        
     })
 
-    category.save().then((createdCategory => {
+     category = await category.save();/*.then((createdCategory => {
         res.status(201).json(createdCategory);
-    }))
+    }))*/
     if(!category)
      return res.status(404).send('category not created');
     
@@ -28,5 +28,20 @@ router.post(`/`,(req,res)=>{
     res.send(category);
 
 });
+
+router.delete(`/:id`,async (req,res)=>{
+    Category.findByIdAndRemove(req.params.id).then(category =>{
+        if(category){
+            return res.status(201).json({success:true,message:'category deleted'});
+        }
+        else{
+            return res.status(404).json({success:false,message:'category id not found'});
+        }
+    }).catch(err=>{
+        return res.status(400).json({success:false,error:err});
+    })
+
+    
+})
 
 module.exports = router;
