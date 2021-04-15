@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get(`/`, async (req,res)=>{
 
-    const categoryList = await Category.find();
+    const categoryList = await Category.find().select('-_id');
     if(!categoryList){
         res.status(500).json({success:true});
     }
