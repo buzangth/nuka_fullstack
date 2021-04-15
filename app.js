@@ -3,12 +3,14 @@ const app = express();
 const bodyParser = require('body-parser');
 const morgan = require('morgan')
 const mongoose = require('mongoose');
-
 const cors = require('cors');
+const authJwt = require('./helper/jwt');
+const errorHandler = require('./helper/error-handler');
 
     
 
-
+app.use(cors());
+app.options('*',cors());
 
 require('dotenv/config');
 const api = process.env.API_URL;
@@ -22,11 +24,12 @@ const categoryRouter = require('./routers/categories');
 
 
 
-app.use(cors);
-app.options('*',cors);
+
 //middleware
  app.use(bodyParser.json());
  app.use(morgan('tiny'));
+ app.use(authJwt());
+ app.use(errorHandler);
 
 
  //routers
@@ -41,7 +44,7 @@ app.options('*',cors);
 mongoose.connect(process.env.MONGO_DB_URL,{ 
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: 'dbnuka'}).then(()=>{
+    dbName: 'nukadb'}).then(()=>{
     console.log('*****db connection success*****');
 });
 
